@@ -3,6 +3,7 @@ package com.lgtm.default_Android_Project_Template
 import android.Manifest
 import android.content.Intent
 import android.content.ServiceConnection
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -13,14 +14,15 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
-import android.view.LayoutInflater
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.location.LocationListenerCompat
+import com.google.android.gms.maps.model.LatLng
 import com.lgtm.default_Android_Project_Template.databinding.ActivitySpeedometerBinding
 import com.lgtm.default_Android_Project_Template.permission.PermissionManager
 import com.lgtm.default_Android_Project_Template.utils.locationManager
-import java.util.concurrent.Executor
+import java.util.*
 
 class SpeedometerActivity : AppCompatActivity(), LocationListenerCompat {
 
@@ -39,23 +41,38 @@ class SpeedometerActivity : AppCompatActivity(), LocationListenerCompat {
         setContentView(binding.root)
 
         initSpeedometer()
-
-        showRequiredPermissionPopup()
-
-        try {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-        } catch (e: SecurityException) {
-            Log.d("Doran", "${e.printStackTrace()}")
-        }
-
     }
 
     private fun initSpeedometer() {
-
+        showRequiredPermissionPopup()
+        try {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 16, 100f, this)
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 16, 100f, this)
+        } catch (e: SecurityException) {
+            Toast.makeText(this, "위치 정보 업데이트에 실패했습니다.", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onLocationChanged(location: Location) {
-        // binding.speedometerView.updateLocation = location
+        updateSpeedometerView(location)
+        updateAddressInfoView(location)
+    }
+
+    private fun updateSpeedometerView(location: Location) {
+        binding.speedometerView.currentSpeed = location.speed
+    }
+
+    private fun updateAddressInfoView(location: Location) {
+        val position = LatLng(location.latitude, location.longitude)
+        val geoCoder = Geocoder(this, Locale.getDefault())
+        val address = geoCoder.getFromLocation(position.latitude, position.longitude, 1)
+            .getOrNull(0)
+
+        binding.addressView.text = if (address != null) {
+            "${address.subLocality} ${address.thoroughfare}"
+        } else {
+            "-"
+        }
     }
 
     private fun showRequiredPermissionPopup() {
