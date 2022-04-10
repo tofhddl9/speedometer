@@ -2,20 +2,29 @@ package com.lgtm.default_Android_Project_Template
 
 import android.Manifest
 import android.content.Intent
+import android.content.ServiceConnection
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.lgtm.default_Android_Project_Template.databinding.ActivityMainBinding
+import androidx.core.location.LocationListenerCompat
+import com.lgtm.default_Android_Project_Template.databinding.ActivitySpeedometerBinding
 import com.lgtm.default_Android_Project_Template.permission.PermissionManager
+import com.lgtm.default_Android_Project_Template.utils.locationManager
+import java.util.concurrent.Executor
 
-class MainActivity : AppCompatActivity() {
+class SpeedometerActivity : AppCompatActivity(), LocationListenerCompat {
 
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivitySpeedometerBinding.inflate(layoutInflater) }
 
     private val exitToast: Toast by lazy {
         Toast.makeText(this, "뒤로가기 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_LONG)
@@ -29,7 +38,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        initSpeedometer()
+
         showRequiredPermissionPopup()
+
+        try {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+        } catch (e: SecurityException) {
+            Log.d("Doran", "${e.printStackTrace()}")
+        }
+
+    }
+
+    private fun initSpeedometer() {
+
+    }
+
+    override fun onLocationChanged(location: Location) {
+        // binding.speedometerView.updateLocation = location
     }
 
     private fun showRequiredPermissionPopup() {
@@ -83,4 +109,5 @@ class MainActivity : AppCompatActivity() {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
         )
     }
+
 }
