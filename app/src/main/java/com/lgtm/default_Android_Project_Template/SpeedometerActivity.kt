@@ -2,10 +2,8 @@ package com.lgtm.default_Android_Project_Template
 
 import android.Manifest
 import android.content.Intent
-import android.content.ServiceConnection
 import android.location.Geocoder
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -13,18 +11,21 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
-import android.widget.SeekBar
+import android.view.MenuItem
+import android.view.WindowManager
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.location.LocationListenerCompat
+import androidx.preference.Preference
+import androidx.preference.PreferenceManager
 import com.google.android.gms.maps.model.LatLng
 import com.lgtm.default_Android_Project_Template.databinding.ActivitySpeedometerBinding
 import com.lgtm.default_Android_Project_Template.permission.PermissionManager
 import com.lgtm.default_Android_Project_Template.utils.locationManager
 import java.util.*
 
-class SpeedometerActivity : AppCompatActivity(), LocationListenerCompat {
+class SpeedometerActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, LocationListenerCompat {
 
     private val binding by lazy { ActivitySpeedometerBinding.inflate(layoutInflater) }
 
@@ -40,7 +41,18 @@ class SpeedometerActivity : AppCompatActivity(), LocationListenerCompat {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        initMenu()
         initSpeedometer()
+    }
+
+    private fun initMenu() {
+        binding.menuButton.setOnClickListener {
+            PopupMenu(this, it).apply {
+                setOnMenuItemClickListener(this@SpeedometerActivity)
+                inflate(R.menu.menu_speedometer)
+                show()
+            }
+        }
     }
 
     private fun initSpeedometer() {
@@ -69,7 +81,7 @@ class SpeedometerActivity : AppCompatActivity(), LocationListenerCompat {
             .getOrNull(0)
 
         binding.addressView.text = if (address != null) {
-            "${address.subLocality} ${address.thoroughfare}"
+            "${address.subLocality ?: ""} ${address.thoroughfare ?: ""}"
         } else {
             "-"
         }
@@ -105,6 +117,36 @@ class SpeedometerActivity : AppCompatActivity(), LocationListenerCompat {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         permissionManager.handleRequestPermissionResult(requestCode, grantResults)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        applySettings()
+    }
+
+    private fun applySettings() {
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+
+        updateKeepTheScreenOn(sp.getBoolean(getString(R.string.key_sp_keep_the_screen_on), false))
+    }
+
+    private fun updateKeepTheScreenOn(isKeepTheScreenOn: Boolean) {
+        if (isKeepTheScreenOn) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_settings -> {
+                startActivity(Intent(this, SettingActivity::class.java))
+                true
+            }
+            else -> false
+        }
     }
 
     override fun onBackPressed() {

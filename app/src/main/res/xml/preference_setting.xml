@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="설정"/>
+
+    <SwitchPreferenceCompat
+        app:key="key_keep_screen_on"
+        app:singleLineTitle="false"
+        app:title="화면 켜진 상태 유지\n(Keep the screen on)"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true" />
+
+</PreferenceScreen>
