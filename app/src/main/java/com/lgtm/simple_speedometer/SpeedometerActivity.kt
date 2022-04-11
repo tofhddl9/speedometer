@@ -57,8 +57,8 @@ class SpeedometerActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListen
     private fun initSpeedometer() {
         showRequiredPermissionPopup()
         try {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 16, 100f, this)
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 16, 100f, this)
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 16, 10f, this)
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 16, 10f, this)
         } catch (e: SecurityException) {
             Toast.makeText(this, "위치 정보 업데이트에 실패했습니다.", Toast.LENGTH_LONG).show()
         }
