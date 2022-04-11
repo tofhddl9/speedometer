@@ -1,4 +1,4 @@
-package com.lgtm.default_Android_Project_Template
+package com.lgtm.simple_speedometer
 
 import android.os.Bundle
 import android.widget.Toast

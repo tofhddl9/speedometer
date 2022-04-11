@@ -18,7 +18,7 @@
         android:layout_margin="8dp"
         android:src="@drawable/ic_baseline_more_horiz_24"/>
 
-    <com.lgtm.default_Android_Project_Template.widgets.SpeedometerView
+    <com.lgtm.simple_speedometer.widgets.SpeedometerView
         android:id="@+id/speedometer_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

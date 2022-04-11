@@ -1,8 +1,8 @@
-package com.lgtm.default_Android_Project_Template
+package com.lgtm.simple_speedometer
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.lgtm.default_Android_Project_Template.databinding.ActivitySettingBinding
+import com.lgtm.simple_speedometer.databinding.ActivitySettingBinding
 
 class SettingActivity : AppCompatActivity() {
 

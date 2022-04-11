@@ -1,4 +1,4 @@
-package com.lgtm.default_Android_Project_Template.permission
+package com.lgtm.simple_speedometer.permission
 
 import android.app.Activity
 import android.content.pm.PackageManager

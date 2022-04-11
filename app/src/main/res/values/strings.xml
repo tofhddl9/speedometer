@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Default_Android_Project_Template</string>
+    <string name="app_name">simple_speedometer</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="key_sp_keep_the_screen_on">key_keep_screen_on</string>

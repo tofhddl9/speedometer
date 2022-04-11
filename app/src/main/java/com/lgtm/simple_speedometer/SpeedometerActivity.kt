@@ -1,4 +1,4 @@
-package com.lgtm.default_Android_Project_Template
+package com.lgtm.simple_speedometer
 
 import android.Manifest
 import android.content.Intent
@@ -17,12 +17,11 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.location.LocationListenerCompat
-import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import com.google.android.gms.maps.model.LatLng
-import com.lgtm.default_Android_Project_Template.databinding.ActivitySpeedometerBinding
-import com.lgtm.default_Android_Project_Template.permission.PermissionManager
-import com.lgtm.default_Android_Project_Template.utils.locationManager
+import com.lgtm.simple_speedometer.databinding.ActivitySpeedometerBinding
+import com.lgtm.simple_speedometer.permission.PermissionManager
+import com.lgtm.simple_speedometer.utils.locationManager
 import java.util.*
 
 class SpeedometerActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, LocationListenerCompat {
@@ -71,7 +70,8 @@ class SpeedometerActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListen
     }
 
     private fun updateSpeedometerView(location: Location) {
-        binding.speedometerView.currentSpeed = location.speed
+        //binding.speedometerView.currentSpeed = location.speed
+        binding.speedometerView.currentSpeed = 197f
     }
 
     private fun updateAddressInfoView(location: Location) {

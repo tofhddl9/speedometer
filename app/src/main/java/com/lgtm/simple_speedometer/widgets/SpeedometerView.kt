@@ -1,17 +1,16 @@
-package com.lgtm.default_Android_Project_Template.widgets
+package com.lgtm.simple_speedometer.widgets
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.LinearGradient
 import android.graphics.Paint
-import android.graphics.RadialGradient
 import android.graphics.Rect
 import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.lgtm.default_Android_Project_Template.R
-import com.lgtm.default_Android_Project_Template.utils.toPx
+import com.lgtm.simple_speedometer.R
+import com.lgtm.simple_speedometer.utils.toPx
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin

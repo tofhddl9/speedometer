@@ -1,4 +1,4 @@
-package com.lgtm.default_Android_Project_Template.data
+package com.lgtm.simple_speedometer.data
 
 data class SpeedometerUiState(
     val minSpeed: Int = 0,
