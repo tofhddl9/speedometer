@@ -70,7 +70,7 @@ class SpeedometerActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListen
     }
 
     private fun updateSpeedometerView(location: Location) {
-        binding.speedometerView.currentSpeed = location.speed
+        binding.speedometerView.currentSpeed = location.speed * 3.6f
     }
 
     private fun updateAddressInfoView(location: Location) {
